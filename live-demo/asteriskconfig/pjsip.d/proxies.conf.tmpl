@@ -1,3 +1,8 @@
+[zoiper_identify_sipp]
+type=identify
+endpoint=zoiper
+match=0.0.0.0/0
+
 [proxies]
 type=endpoint
 transport=k8s-internal-ipv4-internal-media
@@ -17,15 +22,23 @@ contact=sip:{{.}}:5060
 [proxies]
 type=identify
 endpoint=proxies
-{{range .EndpointIPs "kamailio" "voip"}}
-match={{.}}
-{{end}}
+match=0.0.0.0/0
 
 [acl]
 type=acl
-deny=0.0.0.0/0.0.0.0
-permit=10.0.0.0/255.0.0.0
-{{range .EndpointIPs "kamailio" "voip"}}
-permit={{.}}
-{{end}}
+permit=0.0.0.0/0
 
+[zoiper]
+type=endpoint
+context=from-internal
+disallow=all
+allow=ulaw
+auth=zoiper
+aors=zoiper
+rtp_symmetric=yes
+ice_support=no
+force_rport=yes
+
+[zoiper]
+type=aor
+contact=sip:1001@192.168.40.112:5088

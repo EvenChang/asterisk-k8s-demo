@@ -1,6 +1,7 @@
 [inbound]
-exten = demo,1,Verbose(1, "New call")
- same = n,Stasis({{.Env "ARI_APPLICATION"}})
+exten = demo,1,Verbose(1, "Even Test New call")
+ same = n,Answer
+ same = n,Playback(hello-world)
  same = n,Hangup()
 
 exten = echo,1,Verbose(1, "Echo test")
@@ -20,4 +21,13 @@ exten = audiosocket,1,Verbose(1, "Audiosocket Leg")
  same = n,Hangup()
 
 exten = 18882400309,1,Goto(demo,1)
-exten = 16786084209,1,Goto(voicedemo,1)
+exten = 16786084209,1,Goto(echo,1)
+
+[from-internal]
+exten = even,1,NoOp(Call to SIPp)
+ same = n,Verbose(1, "Even test")
+ same = n,Dial(PJSIP/zoiper)
+ same = n,Hangup()
+
+exten = 16786084208,1,Goto(even,1)
+

@@ -1,2 +1,2 @@
-modparam("rtpproxy", "rtpproxy_sock", "udp:localhost:7722")
+modparam("rtpproxy", "rtpproxy_sock", "udp:127.0.0.1:7722")
 
